@@ -1,0 +1,42 @@
+{% extends "base.html" %} 
+
+{% block title %} Search Results {% endblock title %} 
+
+{% block scrape_url_post_viewactive %} active {% endblock scrape_url_post_viewactive %} 
+
+{% block body %}
+
+<div class="container my-3">
+  <h3>Search results:</h3>
+  {% if scraped_data|length < 1 %}  
+  <p>No Search results found.</p>
+  your search query: <b>{{ query }}.</b> did not match any documents. <br>
+  Suggetions:
+  <ul>
+    <li>Make sure that all words are spelled correctly.</li>
+    <li>Try different keywords.</li>
+    <li>Try more general keywords.</li>
+    <li>Try fewer keywords.</li>
+  </ul>
+  {% endif %}
+  {% for scrape_data in scraped_data %}
+  <div class="col-md-6">
+    <div
+      class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 my-4 position-relative">
+      <div class="col p-4 d-flex flex-column position-static">
+        {% comment %} <strong class="d-inline-block mb-2 text-primary">World</strong> {% endcomment %}
+        <h3 class="mb-0"> {{ scrape_data.title }} </h3>
+        <div class="mb-1 text-muted">{{ scrape_data.ScrapedAt }}</div>
+        <p class="card-text mb-auto">
+          {{ scrape_data.content | truncatechars:500 }}
+        </p>
+        <a href="{% url "scraped-data-detail" scrape_data.id %} " role=" button" class="btn btn-primary my-2">Continue reading</a>
+      </div>
+      <div class="col-auto d-none d-lg-block">
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock body %}

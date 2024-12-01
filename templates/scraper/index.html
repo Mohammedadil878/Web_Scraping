@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %} Home {% endblock title %}
+
+{% block scrape_viewactive %} active {% endblock scrape_viewactive %}
+
+{% block body %}
+
+{% comment %} <div class="container my-2">
+  <h1>Scraped Results</h1>
+  <ol>
+    {% for result in results %}
+    <li class="p-2">
+      <strong><a href="{{ result.url }}" target="_blank">{{ result.url }}:</a></strong>
+      {% if result.title %}
+      {{ result.title }}
+      {% else %}
+      {{ result.error }}
+      {% endif %}
+      {% endfor %}
+    </li>
+  </ol>
+</div> {% endcomment %}
+
+<div class="container my-3">
+  <h3>Scraped Results:</h3>
+  {% for result in results %}
+  <div class="col-md-6">
+    <div
+      class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 my-4 position-relative">
+      <div class="col p-4 d-flex flex-column position-static">
+        {% comment %} <strong class="d-inline-block mb-2 text-primary">World</strong> {% endcomment %}
+        <h3 class="mb-0"> {{ result.title }} </h3>
+        <div class="mb-1 text-muted">{{ result.ScrapedAt }}</div>
+        <p class="card-text mb-auto">
+          {{ result.content | truncatechars:500 }}
+        </p>
+        <a href="{% url "scraped-data-detail" result.id %} " role=" button" class="btn btn-primary my-2">Continue reading</a>
+      </div>
+      <div class="col-auto d-none d-lg-block">
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- <div class="container">
+    <h1>Scrape Data from the URL</h1> -->
+<!-- '''Display any error messages''' -->
+<!-- {% if error %}
+    <p style="color: red;">
+      {{ error }}
+    </p>
+    {% endif %} -->
+
+<!-- Form to submit the URL -->
+
+{% comment %} <form action="{% url " scrape-url" %}" method="post">
+  {% csrf_token %}
+  <div class="form-group">
+    <label for="url">Enter the URL to Scrape:</label>
+    <input type="url" class="form-control" id="url" name="url" aria-describedby="url" required />
+  </div>
+  <button type="submit" class="btn btn-primary">Scrape</button>
+</form>
+</div> {% endcomment %}
+
+{% comment %} <div class="container">
+  <!-- Display the Scrape result if it exists -->
+  {% if title and content %}
+  <h2>Scraped Data</h2>
+  <h3>{{ title }}</h3>
+  <div>
+    {{ content|safe }}
+  </div>
+  {% endif %}
+</div> {% endcomment %}
+
+
+{% endblock body %}

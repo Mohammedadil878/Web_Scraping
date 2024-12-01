@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %} Home {% endblock title %}
+
+{% block homeactive%} active {% endblock homeactive %}
+
+{% block body %}
+    <div class="container my-3">
+        <!-- Display the Scrape result if it exists -->
+        {% comment %} {% if title and content %} {% endcomment %}
+        <h2>Scraped Data</h2>
+        <h3>{{ scraped_data.title }}</h3>
+        <div>
+            {{ scraped_data.content|safe }}
+        </div>
+        {% comment %} {% endif %} {% endcomment %}
+    </div>
+
+    <a href=" {% url "scrape-url-post" %} ">Scrape another URL</a>
+
+{% endblock body %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %} Scrape Data {% endblock title %}
+
+{% block scrape_url_post_viewactive %} active {% endblock scrape_url_post_viewactive %}
+
+{% block body %}
+    <div class="container my-3">
+        <h1>Scrape Data from the URL</h1>
+        <!-- '''Display any error messages''' -->
+        {% if error %}
+        <p style="color: red;">
+            {{ error }}
+        </p>
+        {% endif %}
+
+        <!-- Form to submit the URL -->
+
+        <form action="{% url "scrape-url-post" %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="url">Enter the URL to Scrape:</label>
+                <input type="url" class="form-control" id="url" name="url" aria-describedby="url" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Scrape</button>
+        </form>
+    </div>
+
+    {% comment %} <div class="container">
+        <!-- Display the Scrape result if it exists -->
+        {% if title and content %}
+        <h2>Scraped Data</h2>
+        <h3>{{ title }}</h3>
+        <div>
+            {{ content|safe }}
+        </div>
+        {% endif %}
+    </div>  {% endcomment %}
+
+{% endblock body %}
